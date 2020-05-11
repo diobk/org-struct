@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -20,6 +20,78 @@
 
 </head>
 <body>
+    <div th:insert="navigation :: navbar"></div>
+    <br>
+    <div class="tree">
+        <ul>
+            <li><a href="#" th:each="gen : ${GEN_DIR}"
+                   th:utext="${gen.name + ' ' + gen.lastname + '<br>' + gen.post.name}"
+                   th:attr="onclick=|viewDiv('${ 'div' + gen.id }')|"></a>
+                <ul>
+                    <th:block th:each="dir : ${DIR}">
+                        <li><a href="#" th:utext="${ dir.name + ' ' + dir.lastname + '<br>' + dir.post.name}"
+                               th:attr="onclick=|viewDiv('${ 'div' + dir.id }')|"></a>
 
+                            <th:block th:each="worker : ${WORKER}">
+                                <ul th:if="${ dir.department.name == worker.department.name }">
+                                    <a href="#"
+                                       th:utext="${worker.name + ' ' + worker.lastname + '<br>' + worker.post.name}"
+                                       th:attr="onclick=|viewDiv('${ 'div' + worker.id }')|"></a>
+                                </ul>
+                            </th:block>
+
+                        </li>
+                    </th:block>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+
+    <th:block th:each="worker : ${ workers }">
+        <div th:attr="onclick=|notViewDiv('${ 'div' + worker.id}');|">
+            <div th:attr="class=|${ 'div' + worker.id} window|">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" th:attr="onclick=|notViewDiv('${ 'div' + worker.id}');|" >
+                                <span aria-hidden="true">&times</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <label th:utext="${worker.name }"></label> <br><br>
+                            <label th:utext="${worker.lastname }"></label> <br><br>
+                            <label th:utext="${worker.post.name }"></label> <br><br>
+                            <label th:utext="${worker.department.name }"></label> <br><br>
+                        </div>
+
+                        <div class="modal-footer">
+
+                        <th:block th:unless="${worker.id == auth.id}">
+                            <th:block th:if="${auth.role.toString() == 'GEN_DIR' ||
+                                            auth.role.toString() == 'DIR' && auth.department.name == worker.department.name}">
+                                <a th:href="@{'/worker/update/' + ${worker.id} }"><button type="button" class="btn btn-secondary" data-dismiss="modal" >Изменить</button></a>
+                            </th:block>
+                        </th:block>
+
+                        <th:block th:unless="${worker.id == auth.id}">
+                            <th:block th:if="${auth.role.toString() == 'GEN_DIR' ||
+                                            auth.role.toString() == 'DIR' && auth.department.name == worker.department.name}">
+                               <a th:href="@{'/worker/delete/' + ${worker.id} }"><button type="button" class="btn btn-secondary" data-dismiss="modal" >Уволить</button></a>
+                            </th:block>
+                        </th:block>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
 </body>
 </html>
+
+
+<!--<button type="button" class="btn btn-secondary" data-dismiss="modal" >Изменить</button></a>-->
+

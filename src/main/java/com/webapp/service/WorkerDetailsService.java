@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class WorkerDetailsService implements UserDetailsService
 {
-
     private final WorkerService workerService;
 
     public WorkerDetailsService(WorkerService workerService)

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -26,7 +27,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     {
         http
             .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/add").permitAll()
+                .antMatchers("/worker/add").hasAnyAuthority("GEN_DIR", "DIR")
+                .antMatchers("/worker/update/**").hasAnyAuthority("GEN_DIR", "DIR")
+                .antMatchers("/worker/delete/**").hasAnyAuthority("GEN_DIR", "DIR")
+                .antMatchers("/department/add/**").hasAnyAuthority("GEN_DIR")
+                .antMatchers("/post/add/**").hasAnyAuthority("GEN_DIR", "DIR")
                 .anyRequest().authenticated()
             .and()
                 .formLogin()
@@ -34,7 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                     .permitAll()
             .and()
                 .logout()
-                .permitAll();
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .permitAll();
     }
 
     @Override

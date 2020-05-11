@@ -1,5 +1,6 @@
 function viewDiv(className)
 {
+    console.log("asd");
     document.getElementsByClassName(className.toString())[0].style.display = "block";
     document.getElementsByClassName(("backGround"))[0].style.display = "block";
 }

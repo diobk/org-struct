@@ -31,18 +31,18 @@ public class Add
     }
 
     @GetMapping("/add")
-    public void add()
+    public String add()
     {
-        departmentService.save(new Department("отдел генерального"));
-        departmentService.save(new Department("отдел веб разработки"));
-        departmentService.save(new Department("отдел финансов"));
+        departmentService.save("отдел генерального");
+        departmentService.save("отдел веб разработки");
+        departmentService.save("отдел финансов");
 
 
-        postService.save(new Post("Генеральный директор"));
-        postService.save(new Post("директор отдела веб разработки"));
-        postService.save(new Post("директор отдела финансов"));
-        postService.save(new Post("программист"));
-        postService.save(new Post("экономист"));
+        postService.save("Генеральный директор");
+        postService.save("директор отдела веб разработки");
+        postService.save("директор отдела финансов");
+        postService.save("программист");
+        postService.save("экономист");
 
         workerService.save(
                 new Worker("name",
@@ -87,6 +87,7 @@ public class Add
 
 
 
-
+        return "redirect:/login";
     }
+
 }

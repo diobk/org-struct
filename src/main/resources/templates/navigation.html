@@ -4,38 +4,49 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
+
     <link rel='stylesheet' type='text/css' media='screen' href='../static/css/style.css'/>
+
     <link rel="stylesheet" type="text/css" href="../static/css/style1.css"/>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css"
           integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous"/>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <script src="/js/main.js"></script>
 </head>
 <body>
 
 <div th:fragment="navbar" class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <!--        <a class="navbar-brand" href="#">Navbar</a>-->
-        <!--        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
-        <!--            <span class="navbar-toggler-icon"></span>-->
-        <!--        </button>-->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <th:block th:each="role : ${ #authentication.getAuthorities() }" >
+        <div class="collapse navbar-collapse" id="navbar Nav">
+            <ul class="navbar-nav" >
+                <th:block th:each="role : ${ #authentication.getAuthorities() }">
 
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/main}"> main </a>
                     </li>
 
-                    <th:block th:if="${ role == T(com.webapp.entity.Role).GEN_DIR }">
+                    <th:block th:if="${ role.getAuthority().toString() == 'GEN_DIR' }">
 
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/addworker}">add worker</a>
+                            <a class="nav-link" th:href="@{/worker/add}">add worker</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/adddepartment}">add department</a>
+                            <a class="nav-link" th:href="@{/department/add}">add department</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/post/add}">add post</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"
+                               th:utext="${#authorization.authentication.getName() + ' ' + role}"></a>
                         </li>
 
                         <li class="nav-item">
@@ -44,10 +55,10 @@
 
                     </th:block>
 
-                    <th:block th:if="${ role == T(com.webapp.entity.Role).DIR }">
+                    <th:block th:if="${ role.getAuthority().toString() == 'DIR' }">
 
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/addworker}">add worker</a>
+                            <a class="nav-link" th:href="@{/worker/add}">add worker</a>
                         </li>
 
                         <li class="nav-item">
@@ -55,19 +66,12 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/logout}">logout</a>
-                        </li>
-
-                    </th:block>
-
-                    <th:block th:if="${ role == T(com.webapp.entity.Role).LEAD }">
-
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/addworker}">add worker</a>
+                            <a class="nav-link" th:href="@{/post/add}">add post</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#">add department</a>
+                            <a class="nav-link" href="#"
+                               th:utext="${#authorization.authentication.getName() + '<br>' + role}"></a>
                         </li>
 
                         <li class="nav-item">
@@ -76,7 +80,7 @@
 
                     </th:block>
 
-                    <th:block th:if="${ role == T(com.webapp.entity.Role).WORKER }">
+                    <th:block th:if="${ role.getAuthority().toString() == 'WORKER' }">
 
                         <li class="nav-item">
                             <a class="nav-link disabled" href="#">add worker</a>
@@ -84,6 +88,11 @@
 
                         <li class="nav-item">
                             <a class="nav-link disabled" href="#">add department</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"
+                               th:utext="${#authorization.authentication.getName() + '<br>' + role}"></a>
                         </li>
 
                         <li class="nav-item">
@@ -97,6 +106,5 @@
         </div>
     </nav>
 </div>
-
 </body>
 </html>
