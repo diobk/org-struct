@@ -1,13 +1,11 @@
 package com.webapp.controllers.worker;
 
 
-import com.webapp.entity.Post;
 import com.webapp.entity.Role;
 import com.webapp.entity.Worker;
 import com.webapp.service.DepartmentService;
 import com.webapp.service.PostService;
 import com.webapp.service.WorkerService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +45,13 @@ public class UpdateWorkerController
                                @RequestParam String department,
                                @RequestParam String post)
     {
-        Worker worker = new Worker(id, name, lastname, password, role, departmentService.findByName(department), postService.findByName(post));
+        Worker worker = new Worker(id,
+                name,
+                lastname,
+                password,
+                role,
+                departmentService.findByName(department),
+                postService.findByName(post));
         workerService.save(worker);
         return "redirect:/main";
     }

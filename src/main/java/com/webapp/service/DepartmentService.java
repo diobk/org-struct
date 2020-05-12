@@ -2,7 +2,6 @@ package com.webapp.service;
 
 import com.webapp.entity.Department;
 import com.webapp.repo.DepartmentRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,7 +33,6 @@ public class DepartmentService
 
     public Department findByName(String name)
     {
-        System.out.println(departmentRepo.findByName(name) == null);
         return departmentRepo.findByName(name);
     }
 

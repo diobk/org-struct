@@ -60,7 +60,6 @@ class UpdateWorkerControllerTest
         )
                 .andDo(print())
                 .andExpect(redirectedUrl("/main"));
-
         Worker worker1 = workerService.findById(10L);
         Assert.assertNotEquals(worker, worker1);
     }

@@ -41,7 +41,6 @@ class MainControllerTest
                 .andExpect(status().isOk());
     }
 
-
     @Test
     void correctLogin() throws Exception
     {
