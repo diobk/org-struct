@@ -2,6 +2,7 @@ package com.webapp.controllers.post;
 
 import com.webapp.service.PostService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,12 @@ public class AddPostController
     public AddPostController(PostService postService)
     {
         this.postService = postService;
+    }
+
+    @GetMapping("/add")
+    public String addPost()
+    {
+        return "addPost";
     }
 
     @PostMapping("/add")
